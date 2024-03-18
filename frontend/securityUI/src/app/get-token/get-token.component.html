@@ -1,0 +1,28 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <div class="form-group">
+        <label for="email">Username</label>
+        <input type="text" [(ngModel)]="username"
+               class="form-control"
+               id="email"
+               name="email"
+               placeholder="Enter username"
+               required #email="ngModel">
+      </div>
+      <div [hidden]="!email.pristine" class="alert alert-danger">userame is required</div>
+      <div class="form-group">
+        <label for="pass">Password</label>
+        <input type="text" [(ngModel)]="password"
+               class="form-control"
+               id="pass"
+               name="pass"
+               placeholder="Enter your email address"
+               required #pass="ngModel">
+        <div [hidden]="!pass.pristine" class="alert alert-danger">Email is required</div>
+      </div>
+      <button type="submit" [disabled]="!userForm.form.valid"
+              class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>

@@ -2,8 +2,10 @@ package com.alitofigh.security.config;
 
 import com.alitofigh.security.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,12 +14,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by A_Tofigh at 2/24/2024
  */
 
 @Configuration
+@EnableJpaRepositories({"com.alitofigh.security.repo"})
+@EnableTransactionManagement
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
@@ -46,4 +51,9 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+        @Bean
+        public ModelMapper modelMapper() {
+            return new ModelMapper();
+        }
 }

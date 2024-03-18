@@ -1,0 +1,33 @@
+{
+  "properties": [
+    {
+      "name": "oracle.datasource.url",
+      "type": "java.lang.String",
+      "description": "Description for oracle.datasource.url."
+    },
+    {
+      "name": "oracle.username",
+      "type": "java.lang.String",
+      "description": "Description for oracle.username."
+    },
+    {
+      "name": "oracle.password",
+      "type": "java.lang.String",
+      "description": "Description for oracle.password."
+    },
+    {
+      "name": "mysql.datasource.url",
+      "type": "java.lang.String",
+      "description": "Description for mysql.datasource.url."
+    },
+    {
+      "name": "mysql.username",
+      "type": "java.lang.String",
+      "description": "Description for mysql.username."
+    },
+    {
+      "name": "mysql.password",
+      "type": "java.lang.String",
+      "description": "Description for mysql.password."
+    }
+  ] }

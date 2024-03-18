@@ -8,21 +8,15 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 /**
  * Created by A_Tofigh at 2/21/2024
  */
 
 @Entity
-@Table(name = "user")
+@Table(name = "sd_user")
 @Data
 @Builder
 @NoArgsConstructor
@@ -36,15 +30,24 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
-        roles.stream().map(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
+        //roles.stream().map(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
         return authorities;
+    }
+
+    @PreRemove
+    public void removeRole() {
+        this.roles.clear();
     }
 
     @Override

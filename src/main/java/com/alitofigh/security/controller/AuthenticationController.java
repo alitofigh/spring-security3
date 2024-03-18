@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -24,9 +25,11 @@ public class AuthenticationController {
     private final UserServiceImp userServiceImp;
 
     @PostMapping("authenticate")
-    public ResponseEntity<String> getToken(@RequestBody AuthRequest request) {
+    public ResponseEntity<Map<String, String>> getToken(@RequestBody AuthRequest request) {
         String token = userServiceImp.authenticate(request.username, request.password);
-        return ResponseEntity.ok(token);
+        Map<String, String> map = new HashMap<>();
+        map.put("token", token);
+        return ResponseEntity.ok(map);
     }
 }
 
@@ -34,4 +37,9 @@ public class AuthenticationController {
 class AuthRequest {
     String username;
     String password;
+}
+
+@Data
+class AuthResponse {
+    String token;
 }
